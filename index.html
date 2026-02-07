@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient adder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="scroll-area">
+        <h2 style="margin:0">Gradient adder</h2>
+        
+        <div class="section-title">1. Load & Background</div>
+        <div class="flex">
+            <input type="file" id="upload" accept="image/*" style="font-size:0.7rem">
+            <input type="text" id="urlInput" placeholder="Image URL..." style="flex:1">
+            <button class="leader-btn" onclick="loadUrl()">Load</button>
+        </div>
+        <div class="flex" style="margin-top:10px">
+            <div style="flex:2">
+                <label>Background Mode</label>
+                <select id="bgMode" onchange="requestRender()">
+                    <option value="keep">Keep Original</option>
+                    <option value="remove">Transparent (PNG)</option>
+                    <option value="color">Solid Fill</option>
+                </select>
+            </div>
+            <div style="flex:1">
+                <label>BG Color</label>
+                <input type="color" id="bgReplacementColor" value="#000000" oninput="requestRender()">
+            </div>
+        </div>
+
+        <div class="section-title">2. HQ Detail & 3D Effects</div>
+        <label>Detail Preservation (Brightness Lock)</label>
+        <input type="range" id="detailLock" min="0" max="100" value="40" oninput="requestRender()">
+        <div class="flex">
+            <div style="flex:1">
+                <label>3D Effect</label>
+                <select id="fxType" onchange="requestRender()">
+                    <option value="none">None</option>
+                    <option value="bevel">Bevel (Outer)</option>
+                    <option value="emboss">Emboss (Inner)</option>
+                </select>
+            </div>
+            <div style="flex:1">
+                <label>FX Depth</label>
+                <input type="range" id="fxDepth" min="0" max="10" value="2" oninput="requestRender()">
+            </div>
+        </div>
+
+        <div class="section-title">3. Gloss & Metal Finish</div>
+        <div class="flex">
+            <select id="surfaceType" onchange="requestRender()">
+                <option value="flat">Standard</option>
+                <option value="glossy">Glossy High-Light</option>
+                <option value="metallic">Brushed Metal</option>
+            </select>
+            <input type="range" id="sInt" min="0" max="100" value="40" oninput="requestRender()">
+        </div>
+        <label>Surface Light Angle: <span id="sAngVal">45</span>°</label>
+        <input type="range" id="sAngle" min="0" max="360" value="45" oninput="document.getElementById('sAngVal').innerText=this.value; requestRender()">
+
+        <div class="section-title">4. Color Rules</div>
+        <div id="rulesContainer"></div>
+    </div>
+    <div class="footer">
+        <button class="btn btn-download" onclick="download()">Export HQ 32-bit PNG</button>
+    </div>
+</div>
+
+<div class="main-view">
+    <canvas id="canvas"></canvas>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
